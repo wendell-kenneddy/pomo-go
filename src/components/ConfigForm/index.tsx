@@ -1,6 +1,7 @@
 import styles from './styles.module.scss';
 import { timeData } from '../../hooks/useClock/config';
 import { useForm } from '../../hooks/form';
+import { Select } from '../Select';
 
 export function Form() {
   const {
@@ -12,6 +13,7 @@ export function Form() {
   const pomodoroInputName = 'pomodoro-time';
   const shortBreakInputName = 'short-break-time';
   const longBreakInputName = 'long-break-time';
+  const timeValues = [5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60];
 
   return (
     <form action="#">
@@ -19,50 +21,41 @@ export function Form() {
 
       <div className={styles.formControlWrapper}>
         <label htmlFor={pomodoroInputName}>Pomodoro</label>
-        <input
-          type="number"
+        <Select
           name={pomodoroInputName}
           id={pomodoroInputName}
-          step="5"
-          min="5"
-          max="60"
-          onChange={e => updateConfigValue('pomodoro', Number(e.target.value))}
+          values={timeValues}
+          defaultValue={5}
           value={newPomodoroTime}
-          required
+          onChange={e => updateConfigValue('pomodoro', Number(e.target.value))}
         />
       </div>
 
       <div className={styles.formControlWrapper}>
         <label htmlFor={shortBreakInputName}>Pausa Curta</label>
-        <input
-          type="number"
+        <Select
           name={shortBreakInputName}
           id={shortBreakInputName}
-          step="5"
-          min="5"
-          max="60"
+          values={timeValues}
+          defaultValue={5}
+          value={newShortBreakTime}
           onChange={e =>
             updateConfigValue('short-break', Number(e.target.value))
           }
-          value={newShortBreakTime}
-          required
         />
       </div>
 
       <div className={styles.formControlWrapper}>
         <label htmlFor={longBreakInputName}>Pausa Longa</label>
-        <input
-          type="number"
+        <Select
           name={longBreakInputName}
           id={longBreakInputName}
-          step="5"
-          min="5"
-          max="60"
+          values={timeValues}
+          defaultValue={5}
+          value={newLongBreakTime}
           onChange={e =>
             updateConfigValue('long-break', Number(e.target.value))
           }
-          value={newLongBreakTime}
-          required
         />
       </div>
     </form>
