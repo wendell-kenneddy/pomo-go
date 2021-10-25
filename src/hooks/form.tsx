@@ -24,20 +24,24 @@ const FormContext = createContext({} as FormData);
 export function FormProvider({ children }: FormProps) {
   const { config } = useClock();
   const [newPomodoroTime, setNewPomodoroTime] = useState(
-    config.POMODORO_TIME / 60000
+    config.POMODORO_TIME / timeData.MINUTES_IN_MS
   );
   const [newShortBreakTime, setNewShortBreakTime] = useState(
-    config.SHORT_BREAK_TIME / 60000
+    config.SHORT_BREAK_TIME / timeData.MINUTES_IN_MS
   );
   const [newLongBreakTime, setNewLongBreakTime] = useState(
-    config.LONG_BREAK_TIME / 60000
+    config.LONG_BREAK_TIME / timeData.MINUTES_IN_MS
   );
 
   const getNewConfig = () => {
+    let POMODORO_TIME = newPomodoroTime * timeData.MINUTES_IN_MS;
+    let SHORT_BREAK_TIME = newShortBreakTime * timeData.MINUTES_IN_MS;
+    let LONG_BREAK_TIME = newLongBreakTime * timeData.MINUTES_IN_MS;
+
     return {
-      POMODORO_TIME: newPomodoroTime * timeData.MINUTES_IN_MS,
-      SHORT_BREAK_TIME: newShortBreakTime * timeData.MINUTES_IN_MS,
-      LONG_BREAK_TIME: newLongBreakTime * timeData.MINUTES_IN_MS
+      POMODORO_TIME,
+      SHORT_BREAK_TIME,
+      LONG_BREAK_TIME
     };
   };
 
