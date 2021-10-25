@@ -1,0 +1,17 @@
+@import '../../theme/variables.css';
+
+.progressBarWrapper {
+  background: var(--black-secondary);
+  border-radius: 0.4rem;
+  width: 100%;
+  max-width: 34.8rem;
+  height: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+
+  .progressBar {
+    border-radius: 0.4rem;
+    height: 100%;
+  }
+}

@@ -1,0 +1,19 @@
+.button {
+  border: none;
+  border-radius: 0.4rem;
+  padding: 1.6rem;
+  width: 6.4rem;
+  height: 6.4rem;
+  font-family: 'Roboto', sans-serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  text-transform: uppercase;
+
+  &:hover {
+    filter: brightness(1.2);
+  }
+}

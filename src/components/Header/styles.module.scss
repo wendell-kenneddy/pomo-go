@@ -1,0 +1,18 @@
+@import '../../theme/variables.css';
+
+.headerWrapper {
+  width: 90vw;
+  max-width: 600px;
+  margin: 2rem auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  > svg {
+    cursor: pointer;
+
+    &:hover {
+      filter: brightness(1.2);
+    }
+  }
+}
