@@ -6,6 +6,7 @@ import {
   useState
 } from 'react';
 import { useLocalStorage } from '../useLocalStorage';
+import { getNotificationContext } from '../useNotification';
 import { ClockConfig, CLOCK_CONFIG, timeData } from './config';
 
 type Cycles = 'pomodoro' | 'short-break' | 'long-break';
@@ -51,6 +52,7 @@ export function ClockContextProvider(props: ClockProps) {
   const [isShortBreak, setIsShortBreak] = useState(false);
   const [isLongBreak, setIsLongBreak] = useState(false);
   const [isConfiguring, setIsConfiguring] = useState(false);
+  const { notification, notify, permission } = getNotificationContext();
 
   useEffect(() => {
     document.title = `PomoGO - ${timeData.getMinutes(currentTime)}`;
@@ -61,16 +63,35 @@ export function ClockContextProvider(props: ClockProps) {
       currentCycle == CLOCK_CONFIG.CYCLES
         ? selectCycle('long-break')
         : selectCycle('short-break');
+
+      if (permission == 'granted') {
+        notification?.close();
+        notify('Hora de descansar!');
+      }
     }
 
     if (currentTime == 0 && isShortBreak) {
       selectCycle('pomodoro');
       setCurrentCycle(prevCycle => prevCycle + 1);
+
+      if (permission == 'granted') {
+        notification?.close();
+        notify('Hora de trabalhar!', {
+          body: `Ciclo ${currentCycle + 1} de ${totalCycles}!`
+        });
+      }
     }
 
     if (currentTime == 0 && isLongBreak) {
       selectCycle('pomodoro');
       setCurrentCycle(1);
+
+      if (permission == 'granted') {
+        notification?.close();
+        notify('Hora de trabalhar!', {
+          body: `Ciclo 1 de ${totalCycles}!`
+        });
+      }
     }
   }, [currentTime]);
 
@@ -111,6 +132,7 @@ export function ClockContextProvider(props: ClockProps) {
       setIsWorking(true);
       setIsShortBreak(false);
       setIsLongBreak(false);
+
       return;
     }
 
@@ -121,6 +143,7 @@ export function ClockContextProvider(props: ClockProps) {
       setIsShortBreak(true);
       setIsWorking(false);
       setIsLongBreak(false);
+
       return;
     }
 
@@ -131,6 +154,7 @@ export function ClockContextProvider(props: ClockProps) {
       setIsLongBreak(true);
       setIsWorking(false);
       setIsShortBreak(false);
+
       return;
     }
   };
